@@ -43,7 +43,7 @@ def transform_data(**kwargs):
                 item['id'], json_data['key_skill'], item['alternate_url'], item['name'], item['area']['name'],
                 item['employer']['name'], item['salary']['from'], item['salary']['to'], item['created_at']]
 
-    sql = "INSERT INTO vacantions(remote_id, key_skill, alternate_url, name, city, employer, vacancy_compensation_low, vacancy_compensation_high, created_at) VALUES " + ', '.join([f"""(
+    sql = "INSERT INTO vacations(remote_id, key_skill, alternate_url, name, city, employer, vacancy_compensation_low, vacancy_compensation_high, created_at) VALUES " + ', '.join([f"""(
      {vacancy['remote_id']},
     '{vacancy['key_skill']}',
     '{vacancy['alternate_url']}',
@@ -62,7 +62,7 @@ with DAG('load_hh_data', description='load_hh_data', schedule_interval='0 0 * * 
                         task_id=f"create_table",
                         postgres_conn_id="database_PG",
                         sql="""
-                            CREATE TABLE IF NOT EXISTS vacantions (
+                            CREATE TABLE IF NOT EXISTS vacations (
                             id SERIAL PRIMARY KEY,
                             remote_id INTEGER,
                             key_skill VARCHAR(50),
@@ -79,7 +79,7 @@ with DAG('load_hh_data', description='load_hh_data', schedule_interval='0 0 * * 
     #                     task_id=f"drop_table",
     #                     postgres_conn_id="database_PG",
     #                     sql="""
-    #                         DROP TABLE vacantions; 
+    #                         DROP TABLE vacations; 
     #                     """,
     #                     )
 
